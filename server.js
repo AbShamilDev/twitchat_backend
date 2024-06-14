@@ -33,7 +33,7 @@ wss.on("connection", (ws, req) => {
             JSON.stringify({
               type: "message",
               content: parsedMessage.message,
-              from: userId,
+              from: parsedMessage.sender,
             })
           );
         }

@@ -4,6 +4,7 @@ const WebSocket = require("ws");
 
 const app = express();
 const server = http.createServer(app);
+const port = process.env.PORT || 3000;
 const wss = new WebSocket.Server({ server });
 
 app.get("/", (req, res) => {
@@ -26,9 +27,6 @@ wss.on("connection", (ws) => {
 });
 
 // Запуск сервера
-const PORT = 8080;
-server.listen(PORT, () => {
-  console.log(`Сервер запущен на порту ${PORT}`);
-
-  console.log(`IP-адрес сервера: ${server.address().address}`);
+server.listen(port, () => {
+  console.log(`Сервер запущен на порту ${port}`);
 });

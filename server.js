@@ -20,7 +20,7 @@ wss.on("connection", (ws, req) => {
   console.log("Новое соединение установлено");
   const parameters = url.parse(req.url, true).query;
   const userId = parameters.userId;
-  clients.set(userId, ws);
+  clients.set(+userId, ws);
   console.log("Подключение от пользователя под id:", userId);
   console.log("Текущий мап клиентов:", clients);
   ws.on("message", (message) => {
@@ -28,7 +28,7 @@ wss.on("connection", (ws, req) => {
     const parsedMessage = JSON.parse(message);
     switch (parsedMessage.type) {
       case "message":
-        const targetClient = clients.get(parsedMessage.reciver);
+        const targetClient = clients.get(+parsedMessage.reciver);
         console.log(targetClient, parsedMessage.reciver);
         if (targetClient) {
           targetClient.send(

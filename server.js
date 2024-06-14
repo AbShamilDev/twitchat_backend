@@ -22,7 +22,6 @@ wss.on("connection", (ws, req) => {
   const userId = parameters.userId;
   clients.set(+userId, ws);
   console.log("Подключение от пользователя под id:", userId);
-  console.log("Текущий мап клиентов:", clients);
   ws.on("message", (message) => {
     console.log("Получено сообщение: %s", message);
     const parsedMessage = JSON.parse(message);

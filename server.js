@@ -29,8 +29,6 @@ wss.on("connection", (ws, req) => {
         if (targetClient) {
           targetClient.send(
             JSON.stringify({
-              type: "message",
-              from: id,
               content: parsedMessage.message,
             })
           );

@@ -29,4 +29,6 @@ wss.on("connection", (ws) => {
 const PORT = 8080;
 server.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}`);
+
+  console.log(`IP-адрес сервера: ${server.address().address}`);
 });

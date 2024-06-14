@@ -2,6 +2,7 @@ const express = require("express");
 const http = require("http");
 const WebSocket = require("ws");
 const url = require("url");
+const { type } = require("os");
 
 const app = express();
 const server = http.createServer(app);
@@ -20,7 +21,7 @@ wss.on("connection", (ws, req) => {
   const parameters = url.parse(req.url, true).query;
   const userId = parameters.userId;
   clients.set(userId);
-
+  console.log("Подключение от пользователя под id:", userId);
   ws.on("message", (message) => {
     console.log("Получено сообщение: %s", message);
     const parsedMessage = JSON.parse(message);
@@ -30,7 +31,9 @@ wss.on("connection", (ws, req) => {
         if (targetClient) {
           targetClient.send(
             JSON.stringify({
+              type: "message",
               content: parsedMessage.message,
+              from: userId,
             })
           );
         }

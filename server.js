@@ -20,7 +20,7 @@ wss.on("connection", (ws, req) => {
   console.log("Новое соединение установлено");
   const parameters = url.parse(req.url, true).query;
   const userId = parameters.userId;
-  clients.set(userId);
+  clients.set(userId, ws);
   console.log("Подключение от пользователя под id:", userId);
   ws.on("message", (message) => {
     console.log("Получено сообщение: %s", message);

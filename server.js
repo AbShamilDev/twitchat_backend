@@ -11,18 +11,31 @@ app.get("/", (req, res) => {
   res.send("WebSocket сервер работает!");
 });
 
+const clients = new Map();
+
 // Обработчик WebSocket соединений
-wss.on("connection", (ws) => {
+wss.on("connection", (ws, req) => {
   console.log("Новое соединение установлено");
+  const parameters = url.parse(req.url, true).query;
+  const userId = parameters.userId;
+  clients.set(userId);
 
   ws.on("message", (message) => {
     console.log("Получено сообщение: %s", message);
     const parsedMessage = JSON.parse(message);
     switch (parsedMessage.type) {
       case "message":
-        ws.send(parsedMessage.message);
+        const targetClient = clients.get(parsedMessage.reciver);
+        if (targetClient) {
+          targetClient.send(
+            JSON.stringify({
+              type: "message",
+              from: id,
+              content: parsedMessage.message,
+            })
+          );
+        }
         break;
-
       default:
         break;
     }

@@ -17,8 +17,15 @@ wss.on("connection", (ws) => {
 
   ws.on("message", (message) => {
     console.log("Получено сообщение: %s", message);
-    // Отправка сообщения обратно клиенту
-    ws.send(`Эхо: ${message}`);
+    const parsedMessage = JSON.parse(message);
+    switch (parsedMessage.type) {
+      case "message":
+        ws.send(parsedMessage.message);
+        break;
+
+      default:
+        break;
+    }
   });
 
   ws.on("close", () => {

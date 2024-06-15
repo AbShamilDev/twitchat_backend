@@ -19,13 +19,14 @@ const clients = new Map();
 wss.on("connection", (ws, req) => {
   console.log("Новое соединение установлено");
   const parameters = url.parse(req.url, true).query;
-  const token = parameters.token;
-  clients.set(+token, ws);
-  console.log("Подключение от пользователя под токеном:", token);
+  const userId = parameters.userId;
+  clients.set(+userId, ws);
+  console.log("Подключение от пользователя под id:", userId);
 
   ws.on("message", (message) => {
-    console.log("Получено сообщение: %s", message);
     const parsedMessage = JSON.parse(message);
+    console.log("Получено сообщение: %s", parsedMessage.message);
+    console.log("от: %s к: %s", parsedMessage.sender, parsedMessage.reciver);
     switch (parsedMessage.type) {
       case "message":
         const targetClient = clients.get(+parsedMessage.reciver);

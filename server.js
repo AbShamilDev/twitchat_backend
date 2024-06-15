@@ -30,7 +30,7 @@ wss.on("connection", (ws, req) => {
     switch (parsedMessage.type) {
       case "message":
         const targetClient = clients.get(+parsedMessage.reciver);
-        console.log(targetClient, parsedMessage.reciver);
+
         if (targetClient) {
           targetClient.send(
             JSON.stringify({

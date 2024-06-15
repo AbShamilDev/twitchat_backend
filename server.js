@@ -19,9 +19,10 @@ const clients = new Map();
 wss.on("connection", (ws, req) => {
   console.log("Новое соединение установлено");
   const parameters = url.parse(req.url, true).query;
-  const userId = parameters.userId;
-  clients.set(+userId, ws);
-  console.log("Подключение от пользователя под id:", userId);
+  const token = parameters.token;
+  clients.set(+token, ws);
+  console.log("Подключение от пользователя под токеном:", token);
+
   ws.on("message", (message) => {
     console.log("Получено сообщение: %s", message);
     const parsedMessage = JSON.parse(message);

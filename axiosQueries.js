@@ -11,7 +11,7 @@ const send_message = async (message, recipientClient, senderClient) => {
     },
     data: JSON.stringify({
       message: message.message,
-      chatMembers: [message.sender_id, message.recipient_id],
+      chatMembers: [{ id: message.sender_id }, { id: message.recipient_id }],
       date: message.date,
       status: false,
     }),

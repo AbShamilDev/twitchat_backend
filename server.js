@@ -2,8 +2,7 @@ const express = require("express");
 const http = require("http");
 const WebSocket = require("ws");
 const url = require("url");
-const { type } = require("os");
-
+const { send_message } = require("./axiosQueries");
 const app = express();
 const server = http.createServer(app);
 const port = process.env.PORT || 3000;
@@ -25,18 +24,25 @@ wss.on("connection", (ws, req) => {
 
   ws.on("message", (message) => {
     const parsedMessage = JSON.parse(message);
-    console.log("Получено сообщение: %s", parsedMessage.message);
-    console.log("от: %s к: %s", parsedMessage.sender, parsedMessage.recipient);
-    switch (parsedMessage.type) {
-      case "message":
-        const targetClient = clients.get(+parsedMessage.recipient);
 
+    console.log("Получено сообщение: %s", parsedMessage.message);
+
+    switch (parsedMessage.type) {
+      case "send_message":
+        console.log(
+          "от: %s к: %s",
+          parsedMessage.sender,
+          parsedMessage.recipient
+        );
+
+        const message = send_message(parsedMessage).data;
+
+        const targetClient = clients.get(+message.recipient);
         if (targetClient) {
           targetClient.send(
             JSON.stringify({
-              type: "message",
-              content: parsedMessage.message,
-              from: parsedMessage.sender,
+              type: "get_message",
+              ...message,
             })
           );
         }

@@ -18,7 +18,7 @@ const send_message = async (message, recipientClient, senderClient) => {
   }).then((res) => res.data);
 
   if (recipientClient) {
-    targetClient.send(
+    recipientClient.send(
       JSON.stringify({
         type: "get_message",
         message: {

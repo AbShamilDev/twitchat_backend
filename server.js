@@ -26,10 +26,10 @@ wss.on("connection", (ws, req) => {
   ws.on("message", (message) => {
     const parsedMessage = JSON.parse(message);
     console.log("Получено сообщение: %s", parsedMessage.message);
-    console.log("от: %s к: %s", parsedMessage.sender, parsedMessage.reciver);
+    console.log("от: %s к: %s", parsedMessage.sender, parsedMessage.recipient);
     switch (parsedMessage.type) {
       case "message":
-        const targetClient = clients.get(+parsedMessage.reciver);
+        const targetClient = clients.get(+parsedMessage.recipient);
 
         if (targetClient) {
           targetClient.send(

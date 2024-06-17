@@ -22,7 +22,7 @@ const send_message = async (message, targetClient) => {
       JSON.stringify({
         type: "get_message",
         message: {
-          ...result.data,
+          ...result,
         },
       })
     );

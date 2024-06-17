@@ -7,6 +7,7 @@ const send_message = async (message, recipientClient, senderClient) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      Authorization: `Bearer ${message.token}`,
     },
     data: JSON.stringify({
       message: message.message,

@@ -10,8 +10,8 @@ const send_message = async (message, targetClient) => {
     },
     data: JSON.stringify({
       message: message.message,
-      sender_id: +message.sender,
-      recipient_id: +message.recipient,
+      sender_id: +message.sender_id,
+      recipient_id: +message.recipient_id,
       date: message.date,
       status: false,
     }),

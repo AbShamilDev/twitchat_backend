@@ -1,4 +1,4 @@
-import axios from "axios";
+const axios = require("axios");
 
 const send_message = async (message) => {
   return axios({

@@ -35,7 +35,11 @@ wss.on("connection", (ws, req) => {
           parsedMessage.recipient_id
         );
 
-        send_message(parsedMessage, clients.get(+parsedMessage.recipient_id));
+        send_message(
+          parsedMessage,
+          clients.get(+parsedMessage.recipient_id),
+          clients.get(+parsedMessage.sender_id)
+        );
 
         break;
       default:

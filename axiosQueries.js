@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const send_message = async (message, targetClient) => {
+const send_message = async (message, recipientClient, senderClient) => {
   const result = await axios({
     method: "post",
     url: "https://b17d444024b5fb33.mokky.dev/messages",
@@ -17,8 +17,18 @@ const send_message = async (message, targetClient) => {
     }),
   }).then((res) => res.data);
 
-  if (targetClient) {
+  if (recipientClient) {
     targetClient.send(
+      JSON.stringify({
+        type: "get_message",
+        message: {
+          ...result,
+        },
+      })
+    );
+  }
+  if (senderClient) {
+    senderClient.send(
       JSON.stringify({
         type: "get_message",
         message: {

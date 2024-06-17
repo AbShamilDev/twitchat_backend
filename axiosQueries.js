@@ -1,7 +1,7 @@
 const axios = require("axios");
 
-const send_message = (message) => {
-  return axios({
+const send_message = async (message, targetClient) => {
+  const result = await axios({
     method: "post",
     url: "https://b17d444024b5fb33.mokky.dev/messages",
     headers: {
@@ -16,6 +16,17 @@ const send_message = (message) => {
       status: false,
     }),
   }).then((res) => res.data);
+
+  if (targetClient) {
+    targetClient.send(
+      JSON.stringify({
+        type: "get_message",
+        message: {
+          ...result.data,
+        },
+      })
+    );
+  }
 };
 
 module.exports = { send_message };

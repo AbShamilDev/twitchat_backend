@@ -31,21 +31,12 @@ wss.on("connection", (ws, req) => {
       case "send_message":
         console.log(
           "от: %s к: %s",
-          parsedMessage.sender,
-          parsedMessage.recipient
+          parsedMessage.sender_id,
+          parsedMessage.recipient_id
         );
 
-        const message = send_message(parsedMessage);
-        console.log(message);
-        const targetClient = clients.get(+message.recipient);
-        if (targetClient) {
-          targetClient.send(
-            JSON.stringify({
-              type: "get_message",
-              ...message,
-            })
-          );
-        }
+        send_message(parsedMessage, clients.get(+parsedMessage.recipient_id));
+
         break;
       default:
         break;

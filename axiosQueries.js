@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const send_message = async (message) => {
+const send_message = (message) => {
   return axios({
     method: "post",
     url: "https://b17d444024b5fb33.mokky.dev/messages",

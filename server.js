@@ -35,7 +35,7 @@ wss.on("connection", (ws, req) => {
           parsedMessage.recipient
         );
 
-        const message = send_message(parsedMessage).data;
+        const message = send_message(parsedMessage);
         console.log(message);
         const targetClient = clients.get(+message.recipient);
         if (targetClient) {

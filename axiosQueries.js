@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const send_message = async (message) => {
+const send_message = async (message) => {
   return axios({
     method: "post",
     url: "https://b17d444024b5fb33.mokky.dev/messages",
@@ -17,3 +17,5 @@ export const send_message = async (message) => {
     }),
   }).then((res) => res.data);
 };
+
+module.exports = { send_message };
